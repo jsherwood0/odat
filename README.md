@@ -19,8 +19,6 @@ Tested on Oracle Database __10g__,  __11g__,  __12c__ and __18c__.
 Compatible with both python 2.7 ([master branch](https://github.com/quentinhardy/odat/tree/master)) and __python 3__ ([master-python3 branch](https://github.com/quentinhardy/odat/tree/master-python3)).
 
 __ODAT linux standalone__ version at [https://github.com/quentinhardy/odat/releases/](https://github.com/quentinhardy/odat/releases/). Notice it is recommended to use the development version (*git clone*), with the [master-python3 branch](https://github.com/quentinhardy/odat/tree/master-python3).
-=======
-__ODAT linux standalone__ version at [https://github.com/quentinhardy/odat/releases/](https://github.com/quentinhardy/odat/releases/). Notice it is recommended to use the development version (*git clone*).
 
 Changelog
 ====
@@ -132,7 +130,7 @@ Thanks to ODAT, you can:
   * DBMS_ADVISOR
 * __delete files__ using:
   * UTL_FILE
-* __gain privileged access__ using these following system privileges combinations (see help for *privesc* module commands): (__NEW__ : 2016/02/21)
+* __gain privileged access__ using these following system privileges combinations (see help for *privesc* module commands):
   * CREATE ANY PROCEDURE
   * CREATE PROCEDURE and EXECUTE ANY PROCEDURE
   * CREATE ANY TRIGER (and CREATE PROCEDURE)
@@ -152,12 +150,11 @@ Thanks to ODAT, you can:
       * pickup the session key and salt for arbitrary users
       * attack by dictionary on sessions
   * the [__CVE-2012-????__](https://twitter.com/gokhanatil/status/595853921479991297): A user authenticated can modify all tables who can select even if he can't modify them normally (no ALTER privilege). 
-  * the [__CVE-2012-1675__](http://seclists.org/fulldisclosure/2012/Apr/204) (aka TNS poisoning attack) (__NEW__ : 25/03/2016)
+  * the [__CVE-2012-1675__](http://seclists.org/fulldisclosure/2012/Apr/204) (aka TNS poisoning attack)
 * __search in column names__ thanks to the *search* module:
   * search a pattern (ex: password) in column names
 * __unwrap__ PL/SQL source code (10g/11g and 12c)
-* get __system privileges__ and __roles granted__. It is possible to get privileges and roles of roles granted also (__NEW__ : 21/02/2016)
-
+* get __system privileges__ and __roles granted__. It is possible to get privileges and roles of roles granted also
 ![Alt text](./pictures/ODAT_main_features_v2.0.jpg)
 
 Supported Platforms and dependencies
@@ -169,11 +166,7 @@ __Standalone version__ exists in order to don't have need to install dependencie
 The ODAT standalone has been generated thanks to *pyinstaller*.
 
 If you want to have the __development version__ installed on your computer, these following tools and dependencies are needed:
-<<<<<<< HEAD
 * Langage: Python 2.7 & Python 3
-=======
-* Langage: Python 3
->>>>>>> a6e2c03 (Update README.md)
 * Oracle dependancies: 
   * Instant Oracle basic
   * Instant Oracle sdk
