@@ -14,7 +14,7 @@ Usage examples of ODAT:
 * You have a valid Oracle account on a database and want to __escalate your privileges__ to become DBA or SYSDBA
 * You have a Oracle account and you want to __execute system commands__ (e.g. __reverse shell__) in order to move forward on the operating system hosting the database
 
-Tested on Oracle Database __10g__,  __11g__,  __12c__ and __18c__.
+Tested on Oracle Database __10g__,  __11g__,  __12c__, __18c__ and __19c__.
 
 Compatible with both python 2.7 ([master branch](https://github.com/quentinhardy/odat/tree/master)) and __python 3__ ([master-python3 branch](https://github.com/quentinhardy/odat/tree/master-python3)).
 
