@@ -28,7 +28,8 @@ class SIDGuesser (OracleDatabase):
 		self.NO_GOOD_SID_STRING_LIST = ["listener does not currently know of service requested",
 										"listener does not currently know of SID",
 										"connection to server failed",
-										"destination host unreachable"]
+										"destination host unreachable",
+					       					"Connect timeout occurred"]
 
 	def getValidSIDs(self):
 		'''
