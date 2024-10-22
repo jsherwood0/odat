@@ -160,11 +160,15 @@ Supported Platforms and dependencies
 
 ODAT is compatible with __Linux__ only.
 
-__Standalone versions__ exist in order to don't have need to install dependencies and slqplus (see [https://github.com/quentinhardy/odat/releases/](https://github.com/quentinhardy/odat/releases/)).
+__Standalone version__ exists in order to don't have need to install dependencies (see [https://github.com/quentinhardy/odat/releases/](https://github.com/quentinhardy/odat/releases/)).
 The ODAT standalone has been generated thanks to *pyinstaller*.
 
 If you want to have the __development version__ installed on your computer, these following tools and dependencies are needed:
+<<<<<<< HEAD
 * Langage: Python 2.7 & Python 3
+=======
+* Langage: Python 3
+>>>>>>> a6e2c03 (Update README.md)
 * Oracle dependancies: 
   * Instant Oracle basic
   * Instant Oracle sdk
