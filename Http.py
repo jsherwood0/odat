@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*
 
 from OracleDatabase import OracleDatabase
@@ -19,6 +19,7 @@ class Http (OracleDatabase):
 		'''
 		Constructor
 		'''
+		self.baroff = args['baroff']
 		logging.debug("Http object created")
 		OracleDatabase.__init__(self,args)
 		self.ERROR_NO_HTTP = "ORA-29263: "
@@ -68,7 +69,8 @@ class Http (OracleDatabase):
 				if protocol != None : self.portStatusQueue.put([port,protocol,status,info])
 				nb = self.nb.get(block=False) + 1
 				self.nb.put(nb)
-				self.pbar.update(nb)
+				if not pbar.baroff:
+					self.pbar.update(nb)
 				self.queueLock.release()
 				self.portsQueue.task_done()
 
@@ -77,6 +79,7 @@ class Http (OracleDatabase):
 		Scan tcp port of the ip system
 		'''
 		pbar,nb = self.getStandardBarStarted(len(ports)),queue.Queue(1)
+		pbar.baroff = self.baroff
 		threads, portStatusQueue, portsQueue = [], queue.Queue(), queue.Queue()
 		queueLock = threading.Lock()
 		nb.put(0)

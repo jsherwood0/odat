@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 from OracleDatabase import OracleDatabase
@@ -22,6 +22,7 @@ class PasswordGuesser (OracleDatabase):
 		self.passwordFile = passwordFile
 		self.loginAsPwd = loginAsPwd
 		self.separator = args['separator']  # Separator for credentials
+		self.baroff = args['baroff']
 		self.bothUpperLower = bothUpperLower
 		self.randomOrder = randomOrder
 		self.password = password
@@ -152,9 +153,11 @@ class PasswordGuesser (OracleDatabase):
 		if len(self.accounts) == 0:
 			return False
 		pbar,nb = self.getStandardBarStarted(len(self.accounts)), 0
+		pbar.baroff = self.baroff
 		for anAccount in self.accounts:
 			nb += 1
-			pbar.update(nb)
+			if not pbar.baroff:
+				pbar.update(nb)
 			self.args['SYSDBA'] = False
 			self.args['SYSOPER'] = False
 			logging.debug("Try to connect with {0}".format('/'.join(anAccount)))
@@ -188,8 +191,9 @@ class PasswordGuesser (OracleDatabase):
 					status = self.__retryConnect__(nbTry=4)
 				elif self.ERROR_ACCOUNT_LOCKED in str(status):
 					self.args['print'].printImportantNotice("{0} account is locked, so skipping this username for password".format(repr(self.args['user'])))
-					#logging.debug("{0} account is locked, so skipping this username for password".format(repr(self.args['user'])))
 					lockedUsernames.append(self.args['user'].lower())
+				elif self.ERROR_SERVICE_HANDLER in str(status):
+					logging.error("Error during connection with this account. You should use a time sleep between each try: {0}".format(status))
 				else:
 					logging.debug("Error during connection with this account: {0}".format(status))
 				self.close()
@@ -277,6 +281,5 @@ def runPasswordGuesserModule(args):
 		args['print'].badNews("No found a valid account on {0}:{1}/{2}. You should try with the option '--accounts-file accounts/accounts_multiple.txt' or '--accounts-files accounts/logins.txt accounts/pwds.txt'".format(args['server'], args['port'], getSIDorServiceNameWithType(args)))
 	else :
 		args['print'].goodNews("Accounts found on {0}:{1}/{2}: {3}".format(args['server'], args['port'], getSIDorServiceNameWithType(args),getCredentialsFormated(validAccountsList)))
-
 
 

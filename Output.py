@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 #PYTHON_TERMCOLOR_OK
@@ -27,6 +27,7 @@ class Output ():
 		'''
 		print a title
 		'''
+		print("")
 		server, port = "", ""
 		m = m.encode(encoding='UTF-8',errors='ignore')
 		self.titlePos += 1
@@ -43,6 +44,7 @@ class Output ():
 		'''
 		print a subtitle
 		'''
+		print("")
 		m = m.encode(encoding='UTF-8',errors='ignore')
 		self.subTitlePos += 1
 		self.subSubTitlePos += 0
@@ -54,6 +56,7 @@ class Output ():
 		'''
 		print a sub-subtitle
 		'''
+		print("")
 		m = m.encode(encoding='UTF-8',errors='ignore')
 		self.subSubTitlePos += 1
 		formatMesg = '[{0}.{1}.{2}] {3}'.format(self.titlePos, self.subTitlePos, self.subSubTitlePos, m.decode())
@@ -64,6 +67,7 @@ class Output ():
 		'''
 		print a stop message
 		'''
+		print("")
 		m = m.encode(encoding='UTF-8',errors='ignore')
 		formatMesg = '[-] {0}'.format(m.decode())
 		if self.noColor == True  or TERMCOLOR_AVAILABLE == False: print(formatMesg)
@@ -73,6 +77,7 @@ class Output ():
 		'''
 		print good news
 		'''
+		print("")
 		m = m.encode(encoding='UTF-8',errors='ignore')
 		formatMesg = '[+] {0}'.format(m.decode())
 		if self.noColor == True  or TERMCOLOR_AVAILABLE == False: print(formatMesg)
@@ -82,6 +87,7 @@ class Output ():
 		'''
 		print unknow news
 		'''
+		print("")
 		m = m.encode(encoding='UTF-8',errors='ignore')
 		formatMesg = '[+] {0}'.format(m.decode())
 		if self.noColor == True  or TERMCOLOR_AVAILABLE == False: print(formatMesg)
@@ -91,6 +97,7 @@ class Output ():
 		'''
 		print important notice
 		'''
+		print("")
 		m = m.encode(encoding='UTF-8',errors='ignore')
 		formatMesg = '[!] Notice: {0}'.format(m.decode())
 		if self.noColor == True  or TERMCOLOR_AVAILABLE == False: print(formatMesg)
@@ -112,6 +119,7 @@ class Output ():
 		'''
 		print a message
 		'''
+		print("")
 		formatMesg = '[+] {0}'.format(m)
 		if self.noColor == True or TERMCOLOR_AVAILABLE == False:
 			print(formatMesg)

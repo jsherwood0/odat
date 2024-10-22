@@ -22,12 +22,17 @@ class ServiceNameGuesser (OracleDatabase):
 		self.serviceNameFile = serviceNameFile
 		self.serviceNames = []
 		self.validServiceNames = []
+		self.baroff = args['baroff']
 		self.args['SYSDBA'] = False
 		self.args['SYSOPER'] = False
 		self.timeSleep = timeSleep
-		self.NO_GOOD_SERVICE_NAME_STRING_LIST = ["listener does not currently know of service requested",
-												 "listener does not currently know of SID",
-												 "connection to server failed"]
+		self.NO_GOOD_SERVICE_NAME_STRING_LIST = [
+				"listener does not currently know of service requested",
+				"listener does not currently know of SID",
+				"timeout occurred",
+				"could not hand off client connection",
+				"connection to server failed"
+		]
 
 	def getValidServiceNames(self):
 		'''
@@ -66,7 +71,7 @@ class ServiceNameGuesser (OracleDatabase):
 			status = self.__retryConnect__(nbTry=4)
 		if status != None :
 			for aNoGoodString in self.NO_GOOD_SERVICE_NAME_STRING_LIST:
-				if aNoGoodString in str(status):
+				if aNoGoodString in str(status).lower():
 					no_good_service_name_found = True
 					break
 			if no_good_service_name_found == False:
@@ -81,18 +86,29 @@ class ServiceNameGuesser (OracleDatabase):
 		'''
 		self.args['print'].subtitle("Searching valid Service Names thanks to a well known Service Name list on the {0}:{1} server".format(self.args['server'], self.args['port']))
 		self.serviceNames += self.__getServiceNamesFromFile__()
-		pbar,nb = self.getStandardBarStarted(len(self.serviceNames)), 0
+		nb=0
+		barpips = len(self.serviceNames)
+		dotpips = int((barpips+80)/80)
+		self.args['serviceName'] = None
 		logging.info('Start the research')
-		self.args['sid'] = None
+		if self.baroff:
+			print(str(barpips)+' to check.', str(dotpips)+' per dot.')
+		else:
+			pbar,nb = self.getStandardBarStarted(barpips), 0
 		for aServiceName in self.serviceNames :
 			nb += 1
-			pbar.update(nb)
+			if self.baroff:
+				if 0 == (nb % dotpips):
+					print('.', end='')
+			else:
+				pbar.update(nb)
 			self.args['serviceName'] = aServiceName
 			
 			self.__testIfAGoodServiceName__()
 
 			sleep(self.timeSleep)
-		pbar.finish()
+		if not self.baroff:
+			pbar.finish()
 		return True
 
 	def bruteforceServiceNames(self, size=4, charset=string.ascii_uppercase):
@@ -100,18 +116,28 @@ class ServiceNameGuesser (OracleDatabase):
 		Bruteforce Service Names
 		'''
 		self.args['print'].subtitle("Searching valid Service Names thanks to a brute-force attack on {2} chars now ({0}:{1})".format(self.args['server'], self.args['port'], size))
-		pbar,nb = self.getStandardBarStarted(len(charset)**size), 0
+		nb=0
+		barpips = (len(charset) ** size)
+		dotpips = int((barpips+80)/80)
 		logging.info('Start the research')
-		self.args['sid'] = None
+		if self.baroff:
+			print(str(barpips)+' to check.', str(dotpips)+' per dot.')
+		else:
+			pbar,nb = self.getStandardBarStarted(barpips), 0
 		for aServiceName in product(list(charset), repeat=size):
-			nb +=1
-			pbar.update(nb)
+			nb += 1
+			if self.baroff:
+				if 0 == (nb % dotpips):
+					print('.', end='')
+			else:
+				pbar.update(nb)
 			self.args['serviceName'] = ''.join(aServiceName)
 
 			self.__testIfAGoodServiceName__()
 
 			sleep(self.timeSleep)
-		pbar.finish()
+		if not self.baroff:
+			pbar.finish()
 		return True
 
 	def loadServiceNameFromListenerAlias(self):
@@ -135,9 +161,9 @@ def runServiceNameGuesserModule(args):
 		serviceNameGuesser.bruteforceServiceNames(size=aServiceNameSize, charset=args['service-name-charset'])
 	validServiceNameList = serviceNameGuesser.getValidServiceNames()
 	if validServiceNameList == []:
-		args['print'].badNews("No found a valid Service Name".format(args['server'], args['port']))
+		args['print'].badNews("FAIL - Did not find a valid Service Name".format(args['server'], args['port']))
 	else :
-		args['print'].goodNews("Service Name(s) found on the {0}:{1} server: {2}".format(args['server'], args['port'], ','.join(validServiceNameList)))
+		args['print'].goodNews("SUCCESS - Service Name(s) found on the {0}:{1} server: {2}".format(args['server'], args['port'], ','.join(validServiceNameList)))
 	return validServiceNameList
 
 

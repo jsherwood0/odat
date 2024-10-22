@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#! /usr/bin/python3
 # -*- coding: utf-8 -*-
 
 from sys import exit,stdout,version_info
@@ -261,10 +261,10 @@ def runAllModules(args):
 			passwordGuesser.searchValideAccounts()
 			validAccountsList = passwordGuesser.valideAccounts
 			if validAccountsList == {}:
-				args['print'].badNews("No found a valid account on {0}:{1}/{2}. You should try with the option '--accounts-file accounts/accounts_multiple.txt' or '--accounts-files accounts/logins.txt accounts/pwds.txt'".format(args['server'], args['port'], args['sid']))
+				args['print'].badNews("FAIL - Did not find a valid account on {0}:{1}/{2}. You should try with the option '--accounts-file accounts/accounts_multiple.txt' or '--accounts-files accounts/logins.txt accounts/pwds.txt'".format(args['server'], args['port'], args['sid']))
 				#exit(EXIT_NO_ACCOUNTS)
 			else :
-				args['print'].goodNews("Accounts found on {0}:{1}/sid:{2}: {3}".format(args['server'], args['port'], args['sid'],getCredentialsFormated(validAccountsList)))
+				args['print'].goodNews("SUCCESS - Account(s) found on {0}:{1}/sid:{2}: {3}".format(args['server'], args['port'], args['sid'],getCredentialsFormated(validAccountsList)))
 				for aLogin, aPassword in list(validAccountsList.items()): 
 					if (sid in connectionInformationSID) == False:
 						connectionInformationSID[sid] = [[aLogin,aPassword]]
@@ -288,17 +288,17 @@ def runAllModules(args):
 			passwordGuesser.searchValideAccounts()
 			validAccountsList = passwordGuesser.valideAccounts
 			if validAccountsList == {}:
-				args['print'].badNews("No found a valid account on {0}:{1}/{2}. You should try with the option '--accounts-file accounts/accounts_multiple.txt' or '--accounts-files accounts/logins.txt accounts/pwds.txt'".format(args['server'], args['port'], args['serviceName']))
+				args['print'].badNews("FAIL - Did not find a valid account on {0}:{1}/{2}. You should try with the option '--accounts-file accounts/accounts_multiple.txt' or '--accounts-files accounts/logins.txt accounts/pwds.txt'".format(args['server'], args['port'], args['serviceName']))
 				#exit(EXIT_NO_ACCOUNTS)
 			else:
-				args['print'].goodNews("Accounts found on {0}:{1}/serviceName:{2}: {3}".format(args['server'], args['port'], args['serviceName'], getCredentialsFormated(validAccountsList)))
+				args['print'].goodNews("SUCCESS - Account(s) found on {0}:{1}/serviceName:{2}: {3}".format(args['server'], args['port'], args['serviceName'], getCredentialsFormated(validAccountsList)))
 				for aLogin, aPassword in list(validAccountsList.items()):
 					if (aServiceName in connectionInformationServiceName) == False:
 						connectionInformationServiceName[aServiceName] = [[aLogin, aPassword]]
 					else:
 						connectionInformationServiceName[aServiceName].append([aLogin, aPassword])
 		if connectionInformationSID == [] and connectionInformationServiceName == []:
-			args['print'].badNews("No account found with SID(s) or Service Name(s) given (or found). Impossible to continue.")
+			args['print'].badNews("FAIL - No account found with SID(s) or Service Name(s) given (or found). Impossible to continue.")
 			exit(EXIT_NO_ACCOUNTS)
 	else:
 		logging.debug("All Module: a specific account given with user and password arguments")
@@ -423,13 +423,18 @@ def configureLogging(args):
 	datefmt = "%H:%M:%S"
 	#Set log level
 	args['show_sql_requests'] = False
+	level=logging.WARNING	# This is our base. No need to list a level of quiet or verbose that uses the base (i.e., v=0 or q=1)
 	if "verbose" in args:
-		if args['verbose']==0: level=logging.WARNING
-		elif args['verbose']==1: level=logging.INFO
+		if args['verbose']==1: level=logging.INFO
 		elif args['verbose']==2: level=logging.DEBUG
-		elif args['verbose']>2: 
+		elif args['verbose']>2:
 			level=logging.DEBUG
 			args['show_sql_requests'] = True
+	elif "quiet" in args:
+		args['baroff'] = True
+		if args['quiet']==1: level=logging.WARNING
+		elif args['quiet']==2: level=logging.ERROR
+		elif args['quiet']==3: level=logging.CRITICAL
 	else:
 		level=level=logging.WARNING
 	#Define color for logs
@@ -457,6 +462,8 @@ def main():
 	PPoptional = argparse.ArgumentParser(add_help=False,formatter_class=myFormatterClass)
 	PPoptional._optionals.title = "optional arguments"
 	PPoptional.add_argument('-v', dest='verbose', action='count', default=0, help='enable verbosity (-vv for more)')
+	PPoptional.add_argument('-q', dest='quiet', action='count', default=0, help='reduced output during execution (-qq for even less)')
+	PPoptional.add_argument('-b', dest='baroff', action='store_true', default=False, help='disable the progress bar')
 	PPoptional.add_argument('--sleep', dest='timeSleep', required=False, type=float, default=DEFAULT_TIME_SLEEP, help='time sleep between each test or request (default: %(default)s)')
 	PPoptional.add_argument('--encoding', dest='encoding', required=False, default=DEFAULT_ENCODING, help='output encoding (default: %(default)s)')
 	#1.1- Parent parser: connection options

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 from OracleDatabase import OracleDatabase
@@ -22,13 +22,18 @@ class SIDGuesser (OracleDatabase):
 		self.SIDFile = SIDFile
 		self.sids = []
 		self.valideSIDS = []
+		self.baroff = args['baroff']
 		self.args['SYSDBA'] = False
 		self.args['SYSOPER'] = False
 		self.timeSleep = timeSleep
-		self.NO_GOOD_SID_STRING_LIST = ["listener does not currently know of service requested",
-										"listener does not currently know of SID",
-										"connection to server failed",
-										"destination host unreachable"]
+		self.NO_GOOD_SID_STRING_LIST = [
+				"listener does not currently know of service requested",
+				"listener does not currently know of SID",
+				"connection to server failed",
+				"timeout occurred",
+				"could not hand off client connection",
+				"destination host unreachable"
+		]
 
 	def getValidSIDs(self):
 		'''
@@ -87,17 +92,29 @@ class SIDGuesser (OracleDatabase):
 		'''
 		self.args['print'].subtitle("Searching valid SIDs thanks to a well known SID list on the {0}:{1} server".format(self.args['server'], self.args['port']))
 		self.sids += self.__loadSIDsFromFile__()
-		pbar,nb = self.getStandardBarStarted(len(self.sids)), 0
+		nb=0
+		barpips = len(self.sids)
+		dotpips = int((barpips+80)/80)
+		self.args['sid'] = None
 		logging.info('Start the research')
+		if self.baroff:
+			print(str(barpips)+' to check.', str(dotpips)+' per dot.')
+		else:
+			pbar,nb = self.getStandardBarStarted(barpips), 0
 		for aSID in self.sids :
 			nb += 1
-			pbar.update(nb)
+			if self.baroff:
+				if 0 == (nb % dotpips):
+					print('.', end='')
+			else:
+				pbar.update(nb)
 			self.args['sid'] = aSID
 			
 			connectionStatus = self.__testIfAGoodSID__()
 
 			sleep(self.timeSleep)
-		pbar.finish()
+		if not self.baroff:
+			pbar.finish()
 		return True
 
 	def bruteforceSIDs(self, size=4, charset=string.ascii_uppercase):
@@ -105,17 +122,28 @@ class SIDGuesser (OracleDatabase):
 		Bruteforce SID
 		'''
 		self.args['print'].subtitle("Searching valid SIDs thanks to a brute-force attack on {2} chars now ({0}:{1})".format(self.args['server'], self.args['port'], size))
-		pbar,nb = self.getStandardBarStarted(len(charset)**size), 0
+		nb=0
+		barpips = (len(charset) ** size)
+		dotpips = int((barpips+80)/80)
 		logging.info('Start the research')
+		if self.baroff:
+			print(str(barpips)+' to check.', str(dotpips)+' per dot.')
+		else:
+			pbar,nb = self.getStandardBarStarted(barpips), 0
 		for aSID in product(list(charset), repeat=size):
 			nb +=1
-			pbar.update(nb)
+			if self.baroff:
+				if 0 == (nb % dotpips):
+					print('.', end='')
+			else:
+				pbar.update(nb)
 			self.args['sid'] = ''.join(aSID)
 
 			self.__testIfAGoodSID__()
 
 			sleep(self.timeSleep)
-		pbar.finish()
+		if not self.baroff:
+			pbar.finish()
 		return True
 
 	def loadSidsFromListenerAlias(self):
@@ -139,9 +167,9 @@ def runSIDGuesserModule(args):
 		sIDGuesser.bruteforceSIDs(size=aSIDSize, charset=args['sid-charset'])
 	validSIDsList = sIDGuesser.getValidSIDs()
 	if validSIDsList == []:
-		args['print'].badNews("No found a valid SID".format(args['server'], args['port']))
+		args['print'].badNews("FAIL - Did not find a valid SID".format(args['server'], args['port']))
 	else :
-		args['print'].goodNews("SIDs found on the {0}:{1} server: {2}".format(args['server'], args['port'], ','.join(validSIDsList)))
+		args['print'].goodNews("SUCCESS - SID(s) found on the {0}:{1} server: {2}".format(args['server'], args['port'], ','.join(validSIDsList)))
 	return validSIDsList
 
 

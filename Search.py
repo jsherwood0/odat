@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 from OracleDatabase import OracleDatabase
@@ -77,7 +77,8 @@ class Search (OracleDatabase):
 			for aTable in tablesAccessible:
 				if colNb>0:
 					currentColNum += 1
-					pbar.update(currentColNum)
+					if not pbar.baroff:
+						pbar.update(currentColNum)
 				request = self.REQ_GET_COLUMNS_FOR_TABLE.format(aTable['table_name'], aTable['owner'])
 				columnsAndTypes = self.__execQuery__(query=request, ld=['column_name', 'data_type'])
 				if isinstance(columnsAndTypes,Exception):
@@ -105,8 +106,10 @@ class Search (OracleDatabase):
 		if colNb>0 : pbar,currentColNum = self.getStandardBarStarted(colNb), 0
 		for e in listOfDicos :
 			isStringValueInColumn = False
-			if colNb>0 : currentColNum += 1
-			if colNb>0 : pbar.update(currentColNum)
+			if colNb>0 :
+				currentColNum += 1
+				if not pbar.baroff:
+					pbar.update(currentColNum)
 			l = []
 			l.append(e['owner'])
 			l.append(e['table_name'])
