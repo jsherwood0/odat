@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*
 import string
 
-DESCRIPTION = ""\
-"""
+DESCRIPTION = r"""
             _  __   _  ___ 
            / \|  \ / \|_ _|
           ( o ) o ) o || | 

