@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from OracleDatabase import OracleDatabase
+from .OracleDatabase import OracleDatabase
 import logging,cx_Oracle
-from Utils import ErrorSQLRequest, checkOptionsGivenByTheUser, getCredentialsFormated, getSIDorServiceNameWithType
-from Constants import *
-from PasswordGuesser import PasswordGuesser, runPasswordGuesserModule
+from .Utils import ErrorSQLRequest, checkOptionsGivenByTheUser, getCredentialsFormated, getSIDorServiceNameWithType
+from .Constants import *
+from .PasswordGuesser import PasswordGuesser, runPasswordGuesserModule
 
 class UsernameLikePassword (OracleDatabase):
 	'''

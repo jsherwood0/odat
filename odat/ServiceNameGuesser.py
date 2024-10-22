@@ -1,13 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from OracleDatabase import OracleDatabase
+from .OracleDatabase import OracleDatabase
 from time import sleep
 from itertools import product
 import logging, string
-from Tnscmd import Tnscmd
-from Constants import *
-from Utils import stringToLinePadded
+from .Tnscmd import Tnscmd
+from .Constants import *
+from .Utils import stringToLinePadded
 
 class ServiceNameGuesser (OracleDatabase):
 	'''

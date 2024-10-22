@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from OracleDatabase import OracleDatabase
+from .OracleDatabase import OracleDatabase
 import logging, subprocess
 from threading import Thread
-from Utils import checkOptionsGivenByTheUser
-from Constants import *
+from .Utils import checkOptionsGivenByTheUser
+from .Constants import *
 
 import re, base64, zlib, sys
 

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from OracleDatabase import OracleDatabase
-from Utils import ErrorSQLRequest, checkOptionsGivenByTheUser
+from .OracleDatabase import OracleDatabase
+from .Utils import ErrorSQLRequest, checkOptionsGivenByTheUser
 import logging
-from Constants import *
+from .Constants import *
 
 class SMB (OracleDatabase):
 	'''

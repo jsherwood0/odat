@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from OracleDatabase import OracleDatabase
+from .OracleDatabase import OracleDatabase
 import logging,cx_Oracle
-from Utils import ErrorSQLRequest, checkOptionsGivenByTheUser
-from Constants import *
+from .Utils import ErrorSQLRequest, checkOptionsGivenByTheUser
+from .Constants import *
 
 class Ctxsys (OracleDatabase):
 	'''

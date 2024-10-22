@@ -1,0 +1,10 @@
+include odat/conf/*
+include odat/Docker/*
+include odat/accounts/*
+include odat/resources/*
+include odat/pictures/*
+include odat/*.py
+include odat/*.sh
+include poetry.lock
+include pyproject.toml
+include odat/odat-libc2.19-x86_64.spec

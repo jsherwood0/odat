@@ -4,9 +4,9 @@
 import logging, socket, asyncore, re
 from threading import Thread
 from time import sleep
-from Tnscmd import Tnscmd
-from Utils import checkOptionsGivenByTheUser
-from Constants import *
+from .Tnscmd import Tnscmd
+from .Utils import checkOptionsGivenByTheUser
+from .Constants import *
 
 class forwarder(asyncore.dispatcher):
 	'''

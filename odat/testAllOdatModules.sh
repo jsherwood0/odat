@@ -8,7 +8,7 @@ USER="SYS"
 PASSWORD='oracle'
 #OPTIONS
 VERBOSE='-vv' #'> /dev/null'
-ODATBIN='./odat.py'
+ODATBIN='./__main__.py'
 
 
 tests=( "$ODATBIN all -s $SERVER"

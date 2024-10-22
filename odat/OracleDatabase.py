@@ -10,11 +10,11 @@ except Exception as e:
     logging.error("Impossible to load local configuration files in conf/: {0}".format(str(e)))
 '''
 
-from Utils import areEquals,checkOracleVersion,getOracleConnection,ErrorSQLRequest
-from progressbar import *
+from .Utils import areEquals,checkOracleVersion,getOracleConnection,ErrorSQLRequest
+from .progressbar import *
 from time import sleep
 from sys import exit
-from Constants import *
+from .Constants import *
 
 class OracleDatabase:
     '''

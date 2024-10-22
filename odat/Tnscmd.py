@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import logging,struct, socket, re, struct
-from Constants import *
-from Utils import checkOptionsGivenByTheUser
+from .Constants import *
+from .Utils import checkOptionsGivenByTheUser
 
 class Tnscmd():
 	'''

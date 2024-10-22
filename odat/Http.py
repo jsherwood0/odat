@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
 
-from OracleDatabase import OracleDatabase
+from .OracleDatabase import OracleDatabase
 import threading, _thread
 import logging
 import queue
 from texttable import Texttable
-from Utils import areEquals
+from .Utils import areEquals
 import os
-from Constants import *
-from Utils import getScreenSize
+from .Constants import *
+from .Utils import getScreenSize
 
 class Http (OracleDatabase):
 	'''

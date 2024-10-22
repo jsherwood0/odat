@@ -1,7 +1,7 @@
 import logging
-from OracleDatabase import OracleDatabase
-from Constants import *
-from Utils import checkOptionsGivenByTheUser
+from .OracleDatabase import OracleDatabase
+from .Constants import *
+from .Utils import checkOptionsGivenByTheUser
 from passlib.hash import oracle11 as oracle11
 from passlib.hash import oracle10 as oracle10
 

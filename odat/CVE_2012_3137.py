@@ -2,15 +2,15 @@
 # -*- coding: utf-8 -*-
 
 import logging, string, re, sys
-from Utils import execSystemCmd, checkOptionsGivenByTheUser, anAccountIsGiven, getSIDorServiceName
-from OracleDatabase import OracleDatabase
+from .Utils import execSystemCmd, checkOptionsGivenByTheUser, anAccountIsGiven, getSIDorServiceName
+from .OracleDatabase import OracleDatabase
 from time import sleep
 import hashlib
 from Cryptodome.Cipher import AES
 from threading import Thread
-from progressbar import *
+from .progressbar import *
 from os import geteuid
-from Constants import *
+from .Constants import *
 import cx_Oracle
 
 #Load scapy without warnings

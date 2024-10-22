@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from DirectoryManagement import DirectoryManagement
+from .DirectoryManagement import DirectoryManagement
 import logging, random, string 
-from Utils import checkOptionsGivenByTheUser
-from Constants import *
+from .Utils import checkOptionsGivenByTheUser
+from .Constants import *
 import cx_Oracle
-from Utils import ErrorSQLRequest
+from .Utils import ErrorSQLRequest
 
 class DbmsXslprocessor (DirectoryManagement):	
 	'''

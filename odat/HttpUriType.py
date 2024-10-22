@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from Http import Http
+from .Http import Http
 import logging
-from Utils import ErrorSQLRequest, checkOptionsGivenByTheUser
-from Constants import *
+from .Utils import ErrorSQLRequest, checkOptionsGivenByTheUser
+from .Constants import *
 
 
 class HttpUriType (Http):

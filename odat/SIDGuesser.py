@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from OracleDatabase import OracleDatabase
+from .OracleDatabase import OracleDatabase
 from time import sleep
 from itertools import product
 import logging, string
-from Tnscmd import Tnscmd
-from Constants import *
-from Utils import stringToLinePadded
+from .Tnscmd import Tnscmd
+from .Constants import *
+from .Utils import stringToLinePadded
 
 class SIDGuesser (OracleDatabase):
 	'''

@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from OracleDatabase import OracleDatabase
+from .OracleDatabase import OracleDatabase
 import logging, cx_Oracle, subprocess
-from Utils import ErrorSQLRequest, checkOptionsGivenByTheUser
-from Constants import *
+from .Utils import ErrorSQLRequest, checkOptionsGivenByTheUser
+from .Constants import *
 from time import sleep
 from threading import Thread
 import base64
-from MinHtppServer import serverFileForOneRequest
+from .MinHtppServer import serverFileForOneRequest
 
 class DbmsScheduler (OracleDatabase):
 	'''

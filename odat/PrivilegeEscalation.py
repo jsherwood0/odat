@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from OracleDatabase import OracleDatabase
+from .OracleDatabase import OracleDatabase
 import logging, time
-from Constants import *
+from .Constants import *
 #from Info import Info
-from Utils import checkOptionsGivenByTheUser, generateRandomString, ErrorSQLRequest
+from .Utils import checkOptionsGivenByTheUser, generateRandomString, ErrorSQLRequest
 
 class PrivilegeEscalation (OracleDatabase):
 	'''

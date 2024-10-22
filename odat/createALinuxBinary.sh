@@ -10,8 +10,8 @@ else
 	exit 0
 fi
 mkdir -p ./build/linux/
-$PYINSTALLER --clean --onedir --noconfirm --distpath="./build/linux/" --workpath="./build/" --name="odat-$VERSION" odat.py --strip
-#Add a librarie manually
+$PYINSTALLER --clean --onedir --noconfirm --distpath="./build/linux/" --workpath="./build/" --name="odat-$VERSION" __main__.py --strip
+#Add a library manually
 cp "$ORACLE_HOME"/lib/lib* ./build/linux/odat-$VERSION/
 cp /lib64/libaio.so.1 ./build/linux/odat-$VERSION/libaio.so.1
 #cp "$ORACLE_HOME"/lib/libons.so ./build/linux/odat-$VERSION/libons.so

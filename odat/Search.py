@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from OracleDatabase import OracleDatabase
+from .OracleDatabase import OracleDatabase
 import logging
-from Constants import *
-from Utils import checkOptionsGivenByTheUser, getScreenSize
+from .Constants import *
+from .Utils import checkOptionsGivenByTheUser, getScreenSize
 from texttable import Texttable
 
 class Search (OracleDatabase):

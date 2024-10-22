@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from DirectoryManagement import DirectoryManagement
+from .DirectoryManagement import DirectoryManagement
 import logging, random, string, cx_Oracle
 from hashlib import md5
-from Utils import ErrorSQLRequest, checkOptionsGivenByTheUser
-from Constants import *
+from .Utils import ErrorSQLRequest, checkOptionsGivenByTheUser
+from .Constants import *
 
 class UtlFile (DirectoryManagement):
 	'''

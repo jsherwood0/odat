@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from DirectoryManagement import DirectoryManagement
+from .DirectoryManagement import DirectoryManagement
 import logging,cx_Oracle
 #from OracleDatabase import OracleDatabase
-from Utils import ErrorSQLRequest, checkOptionsGivenByTheUser
-from Constants import *
+from .Utils import ErrorSQLRequest, checkOptionsGivenByTheUser
+from .Constants import *
 
 class DbmsLob (DirectoryManagement):	
 	'''

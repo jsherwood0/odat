@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from DirectoryManagement import DirectoryManagement
+from .DirectoryManagement import DirectoryManagement
 import logging, random, string 
-from Utils import checkOptionsGivenByTheUser
-from Constants import *
+from .Utils import checkOptionsGivenByTheUser
+from .Constants import *
 
 class ExternalTable (DirectoryManagement):	
 	'''

@@ -23,7 +23,7 @@ except ImportError:
 
 import argparse, logging, platform, cx_Oracle, string, os, sys
 from libnmap.parser import NmapParser
-from Utils import (areEquals,
+from .Utils import (areEquals,
 				   configureLogging,
 				   ErrorSQLRequest,
 				   sidOrServiceNameHasBeenGiven,
@@ -33,34 +33,34 @@ from Utils import (areEquals,
 				   getSIDorServiceNameWithType,
 				   getHostsFromFile)
 
-from Constants import *
-from Output import Output
-from Tnscmd import runTnsCmdModule
-from UtlFile import UtlFile, runUtlFileModule
-from DbmsAdvisor import DbmsAdvisor,runDbmsadvisorModule
-from DbmsScheduler import DbmsScheduler,runDbmsSchedulerModule
-from UtlHttp import UtlHttp,runUtlHttpModule
-from HttpUriType import HttpUriType,runHttpUriTypeModule
-from Java import Java,runjavaModule
-from PasswordGuesser import PasswordGuesser, runPasswordGuesserModule
-from SIDGuesser import runSIDGuesserModule
-from SMB import SMB, runSMBModule
-from Ctxsys import Ctxsys,runCtxsysModule
-from Passwords import Passwords,runPasswordsModule
-from DbmsXslprocessor import DbmsXslprocessor,runDbmsXslprocessorModule
-from ExternalTable import ExternalTable,runExternalTableModule
-from UtlTcp import UtlTcp,runUtlTcpModule
-from DbmsLob import DbmsLob,runDbmsLob
-from CVE_2012_3137 import CVE_2012_3137,runCVE20123137Module
-from Oradbg import Oradbg,runOradbgModule
-from UsernameLikePassword import UsernameLikePassword,runUsernameLikePassword
-from Search import runSearchModule
-from Unwrapper import runUnwrapperModule
-from PrivilegeEscalation import PrivilegeEscalation, runPrivilegeEscalationModule
-from CVE_XXXX_YYYY import CVE_XXXX_YYYY, runCVEXXXYYYModule
-from Tnspoison import Tnspoison, runTnsPoisonModule
-from OracleDatabase import OracleDatabase
-from ServiceNameGuesser import runServiceNameGuesserModule
+from .Constants import *
+from .Output import Output
+from .Tnscmd import runTnsCmdModule
+from .UtlFile import UtlFile, runUtlFileModule
+from .DbmsAdvisor import DbmsAdvisor,runDbmsadvisorModule
+from .DbmsScheduler import DbmsScheduler,runDbmsSchedulerModule
+from .UtlHttp import UtlHttp,runUtlHttpModule
+from .HttpUriType import HttpUriType,runHttpUriTypeModule
+from .Java import Java,runjavaModule
+from .PasswordGuesser import PasswordGuesser, runPasswordGuesserModule
+from .SIDGuesser import runSIDGuesserModule
+from .SMB import SMB, runSMBModule
+from .Ctxsys import Ctxsys,runCtxsysModule
+from .Passwords import Passwords,runPasswordsModule
+from .DbmsXslprocessor import DbmsXslprocessor,runDbmsXslprocessorModule
+from .ExternalTable import ExternalTable,runExternalTableModule
+from .UtlTcp import UtlTcp,runUtlTcpModule
+from .DbmsLob import DbmsLob,runDbmsLob
+from .CVE_2012_3137 import CVE_2012_3137,runCVE20123137Module
+from .Oradbg import Oradbg,runOradbgModule
+from .UsernameLikePassword import UsernameLikePassword,runUsernameLikePassword
+from .Search import runSearchModule
+from .Unwrapper import runUnwrapperModule
+from .PrivilegeEscalation import PrivilegeEscalation, runPrivilegeEscalationModule
+from .CVE_XXXX_YYYY import CVE_XXXX_YYYY, runCVEXXXYYYModule
+from .Tnspoison import Tnspoison, runTnsPoisonModule
+from .OracleDatabase import OracleDatabase
+from .ServiceNameGuesser import runServiceNameGuesserModule
 
 class MyFormatter(argparse.RawTextHelpFormatter):
     """

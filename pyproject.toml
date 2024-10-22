@@ -1,21 +1,42 @@
-[tool.poetry]
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.setuptools.package-data]
+odat = ["odat/accounts/*", "odat/resources/*", "odat/conf/*", "odat/pictures/*", "odat/Docker/*"]
+
+[project]
 name = "odat"
 version = "5.2.0"
-description = "ODAT (Oracle Database Attacking Tool) is an open source penetration testing tool that tests the security of Oracle Databases remotely."
-authors = ["rootadevkali <root@devkali>"]
+description = "ODAT (Oracle Database Attacking Tool) is an open source penetration testing tool that tests the security of Oracle Databases remotely"
+authors = [
+	{name = "Root At Devkali", email = "root@devkali.local"}
+]
+
 readme = "README.md"
 
-[tool.poetry.dependencies]
-python = "^3.12"
-argcomplete = "*"
-colorlog = "*"
-cx_Oracle = "*"
-passlib = "*"
-pycryptodomex = "*"
-python-libnmap = "*"
-scapy = "*"
-termcolor = "*"
+requires-python = ">=3.8"
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+dependencies = [
+	"argcomplete >= 0",
+	"colorlog >= 0",
+	"cx_Oracle >= 0",
+	"passlib >= 0",
+	"pyasyncore >= 0",
+	"pycryptodomex >= 0",
+	"python-libnmap >= 0",
+	"scapy >= 0",
+	"termcolor >= 0",
+	"texttable >= 0"
+]
+
+[project.scripts]
+odat = "odat.__main__:main"
+
+[project.license]
+text = "MIT"

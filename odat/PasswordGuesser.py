@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from OracleDatabase import OracleDatabase
+from .OracleDatabase import OracleDatabase
 from time import sleep
 import logging, os.path
-from Constants import *
-from Utils import sidOrServiceNameHasBeenGiven, stringToLinePadded, getCredentialsFormated, getSIDorServiceNameWithType, getSIDorServiceName
+from .Constants import *
+from .Utils import sidOrServiceNameHasBeenGiven, stringToLinePadded, getCredentialsFormated, getSIDorServiceNameWithType, getSIDorServiceName
 from random import shuffle
 
 class PasswordGuesser (OracleDatabase):
