@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "odat"
+version = "5.2.0"
+description = "ODAT (Oracle Database Attacking Tool) is an open source penetration testing tool that tests the security of Oracle Databases remotely."
+authors = ["rootadevkali <root@devkali>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+argcomplete = "*"
+colorlog = "*"
+cx_Oracle = "*"
+passlib = "*"
+pycryptodomex = "*"
+python-libnmap = "*"
+scapy = "*"
+termcolor = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

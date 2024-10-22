@@ -99,8 +99,6 @@ from functools import reduce
 try:
     if sys.version >= '2.3':
         import textwrap
-    elif sys.version >= '2.2':
-        from optparse import textwrap
     else:
         from optik import textwrap
 except ImportError:
