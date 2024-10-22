@@ -1,7 +1,7 @@
-| __Quentin HARDY__    |
-| ------------- |
-| __quentin.hardy@protonmail.com__  |
-| __quentin.hardy@bt.com__    |
+| __Quentin HARDY__    | __John Sherwood__ |
+| ------------- | ------------- |
+| __quentin.hardy@protonmail.com__  | __jsherwood0@gmail.com__ |
+| __quentin.hardy@bt.com__    | |
 
 
 ODAT 
@@ -22,6 +22,11 @@ __ODAT linux standalone__ version at [https://github.com/quentinhardy/odat/relea
 
 Changelog
 ====
+* Version __5.2__ (__10/22/2024__):
+  * Revived dormant project
+  * Updated output formats
+  * Restructured project to use standard package structure
+  * Fixed minor problems in code to eliminate warnings
 * Version __5.1__ (__12/03/2021__):
   * new option in _all_ module: __--nmap-file__ for loading all Oracle databases from a nmap XML outpout file
   * new option in _all_ module: __-l__ for loading all targets from a text file (ip:port or ip on each line) 
